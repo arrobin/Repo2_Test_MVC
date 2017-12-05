@@ -11,7 +11,8 @@ namespace Repo2_Test_MVC.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+
     public partial class Section
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,6 +22,7 @@ namespace Repo2_Test_MVC.Models
         }
     
         public int SectionId { get; set; }
+        [DisplayName("Section Name")]
         public string Name { get; set; }
         public Nullable<bool> IsDelete { get; set; }
     
