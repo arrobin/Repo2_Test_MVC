@@ -20,6 +20,11 @@ namespace Repo2_Test_MVC.Controllers
         {
             return View(await db.Sections.ToListAsync());
         }
+        public JsonResult GetAllSection()
+        {
+            var sectionList = db.Sections.Select(a=>new { a.SectionId, a.Name}).ToList();
+            return Json(sectionList, JsonRequestBehavior.AllowGet);
+        }
 
         // GET: Sections/Details/5
         public async Task<ActionResult> Details(int? id)

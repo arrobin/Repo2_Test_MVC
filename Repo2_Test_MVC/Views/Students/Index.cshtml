@@ -60,9 +60,31 @@
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.StudentId }) |
                     @Html.ActionLink("Details", "Details", new { id = item.StudentId }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentId })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.StudentId },new { onclick = "return tryDelete("+item.StudentId+")" })
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<script>
+    function tryDelete(studentId) {
+        var status = confirm("Do you want to delete????");
+        //console.log(studentId);
+        //return false;
+        if (status == false) { return false };
+        $.ajax({
+            url: "/Students/DeleteStudentById",
+            type: 'get',
+            data: { studentId: studentId },
+            dataType: 'json',
+            success: function (response) {
+                //Do Something
+                //console.log(response);
+            },
+            error: function (xhr) {
+                //Do Something to handle error
+            }
+        });
+        return false;
+    }
+</script>

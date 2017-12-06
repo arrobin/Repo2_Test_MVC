@@ -18,7 +18,7 @@ namespace Repo2_Test_MVC.Controllers
         // GET: Students
         public async Task<ActionResult> Index()
         {
-            var students = db.Students.Include(s => s.Section);
+            var students = db.Students.Where(a=>a.IsDelete!=true).Include(s => s.Section);
             return View(await students.ToListAsync());
         }
 
@@ -128,6 +128,18 @@ namespace Repo2_Test_MVC.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+        public JsonResult GetStudentByIdJson(int studentId)
+        {
+            var students = db.Students.Where(a=>a.StudentId==studentId).Select(a=>new { StudentName=a.Name,a.Phone,SectionName=a.Section.Name}).FirstOrDefault();
+            return Json(new { mystudent=students,jhjhjh="nhjhjhj"},JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult DeleteStudentById(int studentId)
+        {
+            var students = db.Students.Find(studentId);
+            students.IsDelete = true;
+            db.SaveChanges();
+            return Json(true, JsonRequestBehavior.AllowGet);
         }
     }
 }
